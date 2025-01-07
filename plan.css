@@ -1,0 +1,97 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+section {
+    padding: 20px;
+}
+
+#introduction, #subjects, #resources {
+    max-width: 1000px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 2em;
+    border-bottom: 2px solid #0077cc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.subject {
+    margin-bottom: 20px;
+}
+
+.subject h3 {
+    font-size: 1.8em;
+    color: #0077cc;
+}
+
+.subject p {
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+#resources ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#resources ul li {
+    margin-bottom: 10px;
+}
+
+#resources ul li a {
+    font-size: 1.2em;
+    color: #0077cc;
+    text-decoration: none;
+}
+
+#resources ul li a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

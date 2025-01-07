@@ -7,17 +7,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css">
-  
+  <link rel="icon" type="image/x-icon" href=img/favicon.ico>
   <style>
       .box {
         background-color: #000000;
         color: #ffffff;
       }
     body {
-      background-image: url('img/test.jpeg');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
+      background-color: #314056;
     }
 
 

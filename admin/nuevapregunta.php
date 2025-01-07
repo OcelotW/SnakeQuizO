@@ -13,7 +13,9 @@ include("funciones.php");
 if(isset($_GET['nuevoTema'])){
     //tomamos los datos que vienen del formulario
     $tema = $_GET['nombreTema'];
-    $mensaje = agregarNuevoTema($tema);
+    $dific = $_GET['Dif'];
+    $LVLr = $_GET['Nreq'];
+    $mensaje = agregarNuevoTema($tema,$dific,$LVLr);
     header("Location: nuevapregunta.php");
 }
 /******************************************************* */
@@ -131,6 +133,10 @@ $resltado_temas = obetenerTodosLosTemas();
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
                 <label for="">Agregar Nuevo Tema</label>
                 <input type="text"   name="nombreTema" required>
+                <label for="">Nivel Requerido</label>
+                <input type="text"   name="Nreq" required>
+                <label for="">Dificultad</label>
+                <input type="text"   name="Dif" required>
                 <input type="submit" name="nuevoTema" value="Guardar Tema" class="btn">
             </form>
         </div>

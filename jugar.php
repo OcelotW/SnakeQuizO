@@ -1,19 +1,31 @@
 <?php
 session_start();
+error_reporting(0);
 
 // Si el usuario no está logeado lo enviamos al index
 if (!$_SESSION['usuario']) {
     header("Location:index.php");
 }
-include("admin/funciones.php");
 
+
+//
+include("admin/funciones.php");
+ObtenernivelReq();
+ObtLevel();
+if($_SESSION['Ver'] == 1){
+    if($_SESSION['Nreq'] > $_SESSION['Lvl']){
+        $_SESSION['fuera'] = $_SESSION['Nreq'];
+        header("Location:index.php");
+    }
+}
 $confi = obtenerConfiguracion();
 $totalPreguntasPorJuego = $confi['totalPreguntas'];
 
 // Variables que controlan la partida
 
 if (isset($_GET['siguiente'])) { // Ya está jugando
-    // Aumento 1 en las estadística
+    // Aumento 1 en las estadísticas
+    aumentarRespondidas();
 
     // Controlar si la respuesta está bien
     if (isset($_GET['respuesta'])) {
@@ -36,7 +48,7 @@ if (isset($_GET['siguiente'])) { // Ya está jugando
         // Obtengo el nombre de la categoría y lo pongo en una variable global
         $_SESSION['nombreCategoria'] = obtenerNombreTema($_SESSION['idCategoria']);
         $_SESSION['score'] = ($_SESSION['correctas'] * 100) / $totalPreguntasPorJuego;
-        include'Xpcalculations.php';
+        include("Xpcalculations.php");
         header("Location: final.php");
         exit();
     }
@@ -67,7 +79,7 @@ if (isset($_GET['siguiente'])) { // Ya está jugando
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Tú puedes!</title>
-    <link rel="stylesheet" href="princ.css">
+    <link rel="stylesheet" href="estilo.css">
     <link rel="icon" type="image/x-icon" href=img/favicon.ico>
 </head>
 <body>

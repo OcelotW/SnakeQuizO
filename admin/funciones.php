@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 //Función para obtener el registro de la configuración del sitio
 function obtenerConfiguracion()
 {
@@ -31,18 +33,19 @@ function obtenerConfiguracion()
 }
 
 //funcion para agrear un nuevo tema a la BD
-function agregarNuevoTema($tema){
+function agregarNuevoTema($tema, $dificultad, $nreq) {
     include("conexion.php");
-    //armamos el query para insertar en la tabla temas
-    $query = "INSERT INTO temas (id, nombre)
-    VALUES (NULL, '$tema')";
+    
+    // Prepare the query to insert into the temas table
+    $query = "INSERT INTO temas (id, nombre, Dificultad, Nreq)
+              VALUES (NULL, '$tema', '$dificultad', '$nreq')";
 
-    //insertamos en la tabla temas
-    if (mysqli_query($conn, $query)) { //Se insertó correctamente
-        $mensaje = "El fue agregado correctamente";
+    // Insert into the temas table
+    if (mysqli_query($conn, $query)) { // Successfully inserted
+        $mensaje = "El tema fue agregado correctamente";
         header("Location: index.php");
     } else {
-        $mensaje = "No se pudo insertar en la BD" . mysqli_errno($conn);
+        $mensaje = "No se pudo insertar en la BD: " . mysqli_error($conn);
     }
     return $mensaje;
 }
@@ -110,6 +113,7 @@ function obtenerIdsPreguntasPorCategoria($tema){
     $result = mysqli_query($conn, $query);
     return $result;
 }
+
 function aumentarRespondidas(){
     include("conexion.php");
     //Selecciono el registro de la estadistica
@@ -131,33 +135,97 @@ function aumentarCompletados(){
     $completados = $estadistica['completados'];
     $completados = $completados + 1;
 
-    $query = "UPDATE estadisticas SET completados = '$completados' WHERE id= $_SESSION[idCategoria]";
+    $query = "UPDATE estadisticas SET completados = '$completados' WHERE id='1'";
     $result = mysqli_query($conn, $query);
 }
-
 function ObtenerDificultad(){
     include("conexion.php");
-    $Id= $_SESSION['idCategoria'];
-    $query = "SELECT Dificultad FROM temas  WHERE id= $Id";
-    $_SESSION['Dif'] = mysqli_query($conn, $query);
+    $Id = $_SESSION['idCategoria'];
+    $query = "SELECT Dificultad FROM temas WHERE id = $Id";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['Dif'] = $row['Dificultad']; // Guardamos el valor, no el resultado de la consulta
 }
 
 function ObtenerXPus() {
     include("conexion.php");
     $nom = $_SESSION['nom'];
-    $query = "SELECT exp FROM clientes  WHERE user= $nom";
-    $_SESSION['XpUs'] = mysqli_query($conn, $query);
+    $query = "SELECT exp FROM cliente WHERE User = '$nom'"; // Añadidas comillas para el string
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['XpUs'] = $row['exp'];
 }
 
 function ObtLevel() {
     include("conexion.php");
-    $query = "SELECT Nivel FROM clientes  WHERE user= $_SESSION[nom]";
-    $_SESSION['Lvl'] = mysqli_query($conn, $query);
+    $query = "SELECT Nivel FROM cliente WHERE User = '$_SESSION[nom]'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['Lvl'] = $row['Nivel'];
 }
+
 function ObtXPlevel() {
     include("conexion.php");
     $lvlup = ($_SESSION['Lvl'] + 1);   
-    $query = "SELECT Lvlup FROM levels  WHERE level= $lvlup";
-    $_SESSION['XPup'] = mysqli_query($conn, $query);
+    $query = "SELECT Lvlup FROM levels WHERE level = $lvlup";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['XPup'] = $row['Lvlup'];
+}
+
+function ObtenerAvatar() {
+    include("conexion.php");
+    $nom = $_SESSION['nom'];
+    $query = "SELECT Avatar FROM cliente WHERE User = '$nom'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['Avatar'] = $row['Avatar'];
+}
+
+function ObtenerAprobados() {
+    include("conexion.php");
+    $nom = $_SESSION['nom'];
+    $query = "SELECT Aprobado FROM cliente WHERE User = '$nom'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['Aprobado'] = $row['Aprobado'];
+}
+function ObtenerDesaprovados() {
+    include("conexion.php");
+    $nom = $_SESSION['nom'];
+    $query = "SELECT Desaprovado FROM cliente WHERE User = '$nom'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['Desaprovado'] = $row['Desaprovado'];
+}
+function ObtenernivelReq() {
+    include("conexion.php");
+
+    // Verificar si la variable de sesión 'idCategoria' está definida
+    if (!isset($_SESSION['idCategoria'])) {
+        die("Error: idCategoria no está definida en la sesión.");
+    }
+
+    $Id = $_SESSION['idCategoria'];
+    $query = "SELECT Nreq FROM temas WHERE id = ?";
+    
+    // Preparar la consulta
+    $stmt = mysqli_prepare($conn, $query);
+    
+    // Vincular el parámetro
+    mysqli_stmt_bind_param($stmt, 'i', $Id);
+    
+    // Ejecutar la consulta
+    mysqli_stmt_execute($stmt);
+    
+    // Obtener el resultado
+    $result = mysqli_stmt_get_result($stmt);
+    
+    // Verificar si se obtuvo un resultado
+    if ($row = mysqli_fetch_assoc($result)) {
+        $_SESSION['Nreq'] = $row['Nreq']; // Guardamos el valor en la sesión
+    } else {
+        $_SESSION['Nreq'] = null; // O asignar un valor por defecto si no se encuentra
+    }
 }
 

@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <?php session_start() ?>
-    <title>snakequiz</title>
+    <title>Registrarse</title>
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css" />
+    <link rel="icon" type="image/x-icon" href=img/favicon.ico>
     <style>
       .box {
         background-color: #000000;
         color: #ffffff;
       }
     body {
-      background-image: url('img/test.jpeg');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
+      background-color: #314056;
     }
 
 
@@ -50,6 +47,7 @@ section img {
   
     </style>
   </head>
+  <?php error_reporting (0)?>
   <body>
     <form method="post">
     <section class="hero is-fullheight">
@@ -61,7 +59,7 @@ section img {
               <br />
                 <div class="field">
                   <p class="control has-icons-left has-icons-right">
-                    <input class="input is-medium" type="text" name="Nombre" />
+                    <input class="input is-medium" type="text" placeholder="Nombre" name="Nombre" />
                     <span class="icon is-medium is-left">
                       <i class="fas fa-user"></i>
                     </span>
@@ -69,7 +67,7 @@ section img {
                 </div>
                 <div class="field">
                   <p class="control has-icons-left has-icons-right">
-                    <input class="input is-medium" type="email" name="Email" />
+                    <input class="input is-medium" type="email" placeholder="Email" name="Email" />
                     <span class="icon is-medium is-left">
                       <i class="fas fa-envelope"></i>
                     </span>
@@ -77,7 +75,7 @@ section img {
                 </div>
                 <div class="field">
                   <p class="control has-icons-left">
-                    <input class="input is-medium" type="password" name="Password" />
+                    <input class="input is-medium" type="password" placeholder="Password" name="Password" />
                     <span class="icon is-small is-left">
                       <i class="fas fa-lock"></i>
                     </span>
@@ -85,7 +83,7 @@ section img {
                 </div>
                 <div class="field">
                   <p class="control has-icons-left has-icons-right">
-                    <input class="input is-medium" type="tel" name="NúmerodeTeléfono" />
+                    <input class="input is-medium" type="tel" placeholder="Télefono" name="NúmerodeTeléfono" />
                     <span class="icon is-medium is-left">
                       <i class="fas fa-phone"></i>
                     </span>
